@@ -1,0 +1,244 @@
+Terminal Commands:
+• cls                  // to clear
+• ctrl+C               // to exit 
+• mongod --version     // to know version
+• mongosh              // starts the server
+• show dbs             // to show data bases (You won't see a database listed in the output of the show dbs command until that database contains at least one collection with data in it.)
+• use <database-name>; // to create new db
+• db.dropDatabase();   // to delete
+
+• show collections; // to show collections
+• db.createCollection('<collection-name>'); // to create collection
+• db.<collection-name>.drop();  // to delete collection
+
+Inserting Documents in MongoDB:
+
+• db.<collection-name>.insertOne({})
+• db.<collection-name>.insertMany([{},{},{}], {ordered:false})   // ordered determine any error on any doc happens next docs to be inserted or not and ordered part is optional (in false if error happens still remaining docs gets added to collection).
+• db.<collection-name>.find()  //to show all doccs in collection
+• db.<collection-name>.find({key:value})  //to show all doc in collection with that key value
+• db.<collection-name>.findOne({key:value})  //to show first matching doc in collection(by id)
+
+• mongoimport 'jsonfileNameWithPath.json' -d databaseName -c collectionName
+• mongoimport 'jsonfileNameWithPath.json' -d databaseName -c collectionName
+• mongoimport 'jsonfileNameWithPath.json' -d databaseName -c collectionName --jsonArray
+
+mongoimport and mongoexport are command-line utilities that are part of the MongoDB Database Tools. These tools are used for importing data into MongoDB (using mongoimport) and exporting data from MongoDB (using mongoexport).
+
+• mongoexport -d databaseName -c collectionName -o 'jsonfileNameWithPath.json'
+
+Operators:(eq, ne, gt, gte, lt, lte, in, nin)
+
+• db.collectonName.find({'price':{$eq: 699}})  // equalto
+• db.collectonName.find({'price':{$ne: 699}})  // not equalto
+• db.collectonName.find({'price':{$gt: 699}})  // greaterthan 
+• db.collectonName.find({'price':{$gte: 699}}) // greaterthan or equalto
+• db.collectonName.find({'price':{$lt: 699}})  // lessthan
+• db.collectonName.find({'price':{$lte: 699}}) // greaterthan
+• db.collectonName.find({'price':{$in: [699, 129, 69]}}).count()  // in
+• db.collectonName.find({'price':{$nin: [699, 129, 69]}}).count() // not in
+
+Cursor Methods:(count(), limit(), skip(), sort())
+
+• db.collectonName.find({'price':{$gt: 250}}).count()
+• db.collectonName.find({'price':{$gt: 250}}).limit(5)
+• db.collectonName.find({'price':{$gt: 250}}).limit(5).skip(2)
+• db.collectonName.find({'price':{$gt: 250}}).limit(3).sort({'price' : 1})   // 1 is for ascending and -1 for descending
+
+Logical Operators:($and, $or, $not, $nor)
+
+• db.products.find({$and:[{'price':{$gt:100}},{'name':'Diamond Ring'}]})  // and operator
+• db.products.find({'price':{$gt: 100}, 'name':'Diamond Ring'})   //When you provide multiple fields within a single query document, MongoDB treats them as an implicit AND operation.
+• db.products.find({$or:[{'price':{$gt:100}},{'name':'Diamond Ring'}]})  // or operator
+• db.products.find({$nor:[{'price':{$gt:100}},{'name':'Diamond Ring'}]})  // nor operator Return only those documents where both condition1 and condition2 are false. ഇരണ്ടും ശരിയല്ലാത്തതു മാത്രം കാണിക്കുക
+//$not — works on one condition ഒരു field-നെ മാത്രം നോക്കി condition true ആകരുത് എന്ന് പറയുന്നതാണ് $not
+//$nor — works on multiple conditions together രണ്ട് അതോ അതിലധികം condition ഒരുമിച്ച് check ചെയ്യുമ്പോൾ, ഒന്ന് പോലും true ആകരുത് — അപ്പോഴാണ് $nor ഉപയോഗിക്കുന്നത്. 
+• db.products.find({'price':{$eq:100}}).count() // equal to 100
+• db.products.find({'price':{$not:{$eq:100}}}).count() //not equal to 100
+• db.products.find({'price':{$ne:100}}).count() //not equal to 100
+
+Complex Expressions:
+• db.sales.find({$expr:{$gt:[{$multiply:['$quantity','$price']},'$targetPrice']}})
+
+Elements Operator:($exists, $type, $size)
+• db.products.find({price:{$exists: true},price:{$gt:1250}}) // exists check wheter price is preset in the document
+
+The <BSONType> value can be one of the following:
+1:Double
+2:String
+3:Object
+4:Array
+5:Binary data
+6:Undefined
+7:Object id
+8:Boolean
+9:Date
+10:null
+11:Regular expression
+12:JavaScript code
+
+• db.products.find({price: {$type: 'number'}}).count() // check type
+• db.products.find({'comments':{$size:3}}).count() // checks the comments value array size/length. 
+
+Projection: (1 for inclusion, 0 for exclusion)
+• db.comments.find({'comments':{$size:2}},{comments:1,_id:0}) //inclusion/exclusion
+
+Embedded Documents:
+• db.comments.find({'comments.user':'Lily'}) //embedded document
+• db.comments.find({'metadata.views':{$gt:1200}})
+• db.comments.find({'comments.user':'Henry','metadata.likes':{$gt:50}})
+
+$all vs $elemMatch:
+• db.comments.find({'comments.user':{$all:['Alice','Vinod']}}) // Alice and Vinod are users under comments Array so we can use all.This query will return documents where the comments.user array contains both 'Alice' and 'Vinod'.
+• db.comments.find({'comments':{$elemMatch:{'user':'Alice','text':'Awesome article!'}}})  // $elemMatch ഉപയോഗിക്കുന്നത് array-യിൽ ഉള്ള ഒരേ object-ൽ ഏതാനും field-കൾ match ചെയ്യണോ എന്ന് നോക്കാൻ ആണ്.
+ഇവിടെ user: "Alice" ഉം text: "Awesome article!" ഉം ഒരേ comment object-ൽ ഉണ്ടായിരിക്കണം.
+• db.comments.find({'comments.user':'Alice','comments.text':'Awesome article!'}) // or can use thisway
+
+Update Operations in MongoDB:
+• db.products.updateOne({_id:ObjectId("64c2363be32f4a51b19b9271")},{$set:{'price':45}})
+• db.products.updateMany({price:120},{$set:{'isFeatured':true}})
+
+Removing and Renaming Fields:
+• db.products.updateMany({price:123},{$rename:{'isFeatured':'isFeature'}}) // to rename the property/field of document.
+• db.products.updateMany({price:123},{$unset:{'isFeatured':1}}) // to delete the property/field of document.
+• db.collectionName.updateOne({_id:ObjectId("64c2363be32f4a51b19b9271")},{$set:{newField:"new value"}}) // adding a new field in a document.
+
+Updating arrays and Embedded Documents:
+• db.collectionName.updateOne({_id:5},{$push:{comments:{'Eva',text:'subscribe to my channel'}}}) // adding a new item to array.
+• db.comments.updateOne({_id:5},{$pop:{'comments':1}}) // to remove last element from the array.
+• db.comments.updateOne({_id:7, 'comments.user':'Alice'},{$set:{'comments.$.text':'Awesome Thapa'}})  //changing the value of user that is embedded doc.
+
+Delete Operations in MongoDB:
+• db.comments.deleteOne({_id:1})
+• db.products.deleteMany({price:55})
+
+Indexes in MongoDB:
+• db.products.getIndexes()  // to see all indexes
+• db.products.createIndex({'name':1}) // to create index
+• db.products.explain('executionStats').find({'name':'Air Fryer'}) // to see execution time
+• db.products.dropIndex({name:1}) // to delete index
+• db.products.createIndex({email:1},{unique:true}) // if we try to insert another same email id it wont get inserted as its unique with index
+• db.collection.find({$text:{$search:"keyword"}});
+• db.products.find({field:{$regex:"air"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+======================================================
+MongoDB:
+
+BASICS:
+Introduction to MongoDB
+NoSQL vs SOL
+JSON vs BSON
+Managing DB & Collections
+Advanced CRUD Operations
+Comparison Operators
+Cursors in MongoDB
+Logical Operators
+$expr & Elements Operator
+Projection & Relationship
+Embedded Documents
+
+ADVANCED:
+Introduction to Indexes
+Creating and Managing Index
+Understanding the Aggregation Framework
+Introduction to Aggregation
+Basic Aggregation Operations
+Combining Aggregation Stages
+Aggregation Operators and Expressions
+Pipeline Stages
+($match, $project, $group, $sort, $limit, $unwind, $filter, $skip etc)
+
+PROJECTS:
+Project 1:
+Working with MongoDB
+Node.js Driver (How to perform CRUD operations In real life project )
+Project 2:
+Working with MongODB & Node.js
+======================================================
+What is MongoDB?
+MongoDB is an open-source, document-oriented NoSQL database management system.
+What is a Document Database? Document Database that store information as document(Json)
+Designed for flexibility, scalability, and performance in handling unstructured or semi-structured data
+It was created by a company called 10gen, which is now known as MongoDB. The company was founded by Eliot Horowitz and Merriman in 2007.
+======================================================
+SQL & NOSQL(MongoDB)
+SQL:
+• SQL databases are relational databases.
+• They use structured tables to store data in rows and columns.
+• Suitable for applications with well-defined schemas and fixed data structures.
+• E-commerce Platform, HR Management etc
+Examples: MySQL, PostgreSQL, Oracle.
+
+NOSQL:
+• NoSQL databases are non-relational databases.
+• They provide flexibility in data storage, allowing
+varied data types and structures.
+• Ideal for applications with dynamic or evolving
+data models.
+• CMS, Social Media Platforms, Gaming
+• Examples: MongoDB, Cassandra
+======================================================
+Database => (have multiple) collection => (have multiple) Document
+======================================================
+Key Features of MongoDB:
+
+Flexible Schema Design
+• MongoDB allows dynamic, schema-less data structures.
+• Easily accommodate changing data requirements.
+
+Scalability and Performance
+• Horizontal scaling supports large datasets and high traffic.
+• Optimized read and write operations for fast performance.
+
+Document-Oriented Storage
+• Data is stored in flexible, JSON-like BSON documents.
+• Self-contained units with rich data types and nested arrays.
+
+Dynamic Queries
+• Rich query language with support for complex queries.
+• Utilize indexes to speed up query execution.
+
+Aggregation Framework
+• perform advanced data transformations and analysis.
+• Process data using multiple pipeline stages.
+
+Open Source and Community
+• MongoDB is open-source with a vibrant community.
+• Regular updates, improvements, and support.
+======================================================

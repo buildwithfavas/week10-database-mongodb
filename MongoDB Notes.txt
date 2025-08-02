@@ -1,0 +1,158 @@
+MongoDB Overview(Document, DB, BSON, Structure)
+
+Relational vs Document DB
+• Difference between relational and document databases
+• Advantages of the document databases
+
+JSON and BSON
+• JSON
+• Extended JSON
+• BSON
+• Data types
+
+MongoDB Structure
+• MongoDB Shell and Server
+• Databases
+• Collections
+• Documents
+
+Insert documents into the collection
+• insertOne()
+• insertMany()
+
+Find documents
+• find()
+• findOne()
+
+Query Operators
+• $or
+• $and
+• $in
+• $ne
+• $gt
+• $lt
+
+Update Documents
+• updateOne()
+• updateMany()
+
+Update Operators
+• $set
+• Sunset
+• $inc
+• $rename
+• $currentDate
+• $addToSet
+
+Delete Documents
+• deleteOne()
+• deleteMany()
+
+Advanced Topics
+• Aggregation Framework
+• MongoDB Utilities
+• Indexes
+• MongoDB External Drivers
+
+======================================================
+MongoDB:
+MongoDB uses Mozilla's SpiderMonkey JavaScript Engine
+Type is Document database(no sql db)
+
+2 type db: 
+1.Relational Db(sql)
+eg: my sql, oracle
+data stored in different tables those tables have fixed schema, Data that is stored in those tables has relations such as one to one, one to many or many to many. And in order to retrieve some data from the relational database, you usually perform join request that combines data from different tables 
+
+2. Document Db(no sql)
+Data is stored in separate documents, and each document is independent from others, and it is not mandatory to have same schema for all documents. 
+For example, some documents in the database may have field called City, but other documents in the same database may not have this field. 
+Another advantage, all information related to the document is stored in one document in one place, and when you perform query, you retrieve just one document. 
+No need to perform different join requests. And of course you can edit any document independent from others, you can insert new documents you can delete documents, and so on. But if flexible. 
+======================================================
+Structure of the MongoDB database:
+Each MongoDB database consists of databases.
+There are default databases that are created after each installation of the MongoDB for example, admin and local.
+Each database consists of collections, and each collection consists of the documents.
+Usually documents are grouped into the same collection by common fields. Let's suppose that you want to create e commerce web application, and you will create a database called e commerce Store, and you will probably create such collections as products, product categories, shopping cart, customers and so on.
+Again, schema is flexible, and it's not mandatory to have same set of fields in the documents in the same collection.
+======================================================
+Mongo shell and mongo server:
+When you install MongoDB, you'll get those two applications. Mongod command is used to launch Mongo server and Mongo command is used to launch Mongo shell.
+Those two applications are separate, Mongo server stores data in the MongoDB database is the main point of data storage, and Mongo shell is used for management of the Mongo server.
+Using Mongo shell, you can insert documents into the Mongo server, you can update documents, you can delete documents, and so on. You can perform all kinds of CRUD operations, create, read, update and delete, and that is a Mongo shell. Both Mongo shell and Mongo server are based on the JavaScript engine. In order to manage MongoDB server, you can use Mongo shell located on the same computer, but you can also manage remote Mongo server using local Mongo shell.
+For example, you can connect to remote MongoDB server using MongoDB shell installed on your local computer.
+======================================================
+Commands:
+mongod -version
+mongod
+======================================================
+
+
+
+
+======================================================
+
+
+
+
+======================================================
+
+
+
+
+======================================================
+
+
+
+
+======================================================
+
+
+
+
+======================================================
+
+
+
+
+======================================================
+
+
+
+======================================================
+
+
+
+======================================================
+
+
+
+======================================================
+
+
+
+
+======================================================
+
+
+
+======================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
