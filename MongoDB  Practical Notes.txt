@@ -118,21 +118,26 @@ Indexes in MongoDB:
 • db.products.explain('executionStats').find({'name':'Air Fryer'}) // to see execution time
 • db.products.dropIndex({name:1}) // to delete index
 • db.products.createIndex({email:1},{unique:true}) // if we try to insert another same email id it wont get inserted as its unique with index
-• db.collection.find({$text:{$search:"keyword"}});
+• db.collection.find({$text:{$search:"keyword"}})
 • db.products.find({field:{$regex:"air"}
 
+Aggregation:
+• db.products.aggregate([{$match:{'name':'Sleek Wooden Tuna'}}]) //show docs with name=Sleek Wooden Tuna
+• db.products.aggregate([{$match:{price:{$gt:1250}}}]) //show docs with price>1250
+• db.products.aggregate([{$group:{_id:"$company", totalProducts:{$sum:1}}}]) //here it group by company name and create a new field as totalProducts showing its count.
+• db.products.aggregate([{$group:{_id:'$company',totalProducts:{$sum:"$price"}}}]) //here it group by company name and create a new field as totalProducts showing sum of prices of each group.
+• db.products.aggregate([{$match:{price:{$gt:900}}},{$group:{_id:"$company", totalProducts:{$sum:1}}}]) //pipeline first filter then group and find price sum of each group.
+• db.sales.aggregate([{$match:{'quantity':5}},{$group:{_id:'$quantity',priceTotal:{$sum:'$price'},priceAvg:{$avg:'$price'}}}]) //pipeline first filter then group and find price sum and average of each group.
+• db.products.aggregate([{$group:{_id:'$company',totalProducts:{$sum:"$price"}}},{$sort:{totalPrice:1}}]) //here it group by company name and create a new field as totalProducts showing sum of prices of each group and sort ascending by total products. (-1 for desecending)
+• db.products.aggregate([{$project:{price:1,discountPrice:{$multiply:['$price',0.8]}}]) //shows docs with id &price and discountPrice
+• db.products.aggregate([{$unwind:'$colors'},{$match:{price:{$gt:1200}}},{$group:{_id:'$price',allColors:{$addToSet:'$colors}}}])  //unwind to destructure, addToSet to remove duplicates and add to array, or we can use $push to simply add.
+• db.products.aggregate([{$unwind:"$colors"},{$match:{price:{$gt:1200}}},{$group:{_id:"$price",colors:{$addToSet:"$colors"}}},{$project:{_id:1,colors:1,colorLength:{$size:"$colors"}}}])  //$size can't able to use inside $group so make pipeline like this.
+• {$skip:1} 0r {$limit:1}  can be added to pipeline.
+• db.col.aggregate([{$project:{name:1,thapaValue:{$filter:{input:'$values',as:'val',cond:{$gt:['$$val',30]}}}}}]) //$filter method for an array.
 
 
 
-
-
-
-
-
-
-
-
-
+ 
 
  
 
