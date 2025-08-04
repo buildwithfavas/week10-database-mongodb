@@ -1,0 +1,37 @@
+Week -10 Database
+
+familiar with terminal
+
+Db-principles, properties, design level, sql query
+dbms- sql(banking), no sql
+transactions
+acid properties(atomicity,consistency,isolation.,.,.)/base propertices
+isolation practicals
+Example: ecommerce- use case payment block/error -cart item not properly updated.(isolation levels senario)
+sql,nosql
+
+youtube mock interviews-db
+
+1.mongodb-CRUD  collectio>doc>crud
+add bulk data 
+2.operators
+3.skip,limit,pagination(real world example)
+4.aggrigation (pipeline methods)-important(lookup,project,group,sum,avg)
+vertical scaling, horizontal scaling(sharding, diff sharding strategies)
+inside terminal(syntax important)
+indexing(db queries make faster) ex:supermarket billing system-add data queue nnu oyivakka (indexing korav space kooduthal edkkum, writing drawback)
+insta-more reading faster(insta upload time edkkum, indexing priority)
+types of indexing
+grid,tts,cap collection
+
+db relations(db design-senario-netflix db design-user login profiles,videos for actors-actors db for movie trailerdb, user accounts,profilesdb forgien key user id) => youtube
+
+
+ Database -NoSQL -mongoDB 
+ -crud 
+ -collections-types
+ -aggregation pipeline
+
+ -scaling, replicating, sharding, indexing    
+
+https://chatgpt.com/share/688fe364-80d0-8009-a4b3-abc41e7c8185
